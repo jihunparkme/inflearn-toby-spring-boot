@@ -1,2 +1,6 @@
 ### hello
 GET localhost:8080/hello?name=Spring
+
+
+### hello servlet
+GET localhost:8080/servlet/hello?name=servlet
