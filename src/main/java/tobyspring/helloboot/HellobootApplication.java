@@ -18,9 +18,9 @@ import java.io.IOException;
 public class HellobootApplication {
 
 	public static void main(String[] args) {
-		GenericApplicationContext applicationContext = new GenericApplicationContext();
-		applicationContext.registerBean(HelloController.class); // 빈 등록
-		applicationContext.refresh(); // 구성 정보로 컨테이너 초기화
+		GenericApplicationContext applicationContext = new GenericApplicationContext(); // 스프링 컨테이너 생성
+		applicationContext.registerBean(HelloController.class); // 빈 오브젝트 클래스 정보 등록
+		applicationContext.refresh(); // 구성 정보로 컨테이너 초기화(빈 오브젝트를 직접 생성)
 
 		ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
 		WebServer webServer = serverFactory.getWebServer(servletContext -> {
@@ -31,7 +31,7 @@ public class HellobootApplication {
 					if (req.getRequestURI().equals("/servlet/hello") && req.getMethod().equals(HttpMethod.GET.name())) {
 						String name = req.getParameter("name");
 
-						HelloController helloController = applicationContext.getBean(HelloController.class);
+						HelloController helloController = applicationContext.getBean(HelloController.class); // 컨테이너가 관리하는 빈 오브젝트 획득
 						String ret = helloController.hello(name);
 
 						resp.setContentType(MediaType.TEXT_PLAIN_VALUE);
