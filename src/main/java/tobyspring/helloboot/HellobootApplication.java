@@ -3,16 +3,28 @@ package tobyspring.helloboot;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.web.context.support.GenericWebApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+@Configuration
 public class HellobootApplication {
+    @Bean
+    public HelloController helloController(HelloService helloService) {
+        return new HelloController(helloService);
+    }
+
+    @Bean
+    public HelloService helloService() {
+        return new SimpleHelloService();
+    }
 
     public static void main(String[] args) {
         /**
          * Spring Container 생성, 빈 등록, 초기화 단계
          */
-        GenericWebApplicationContext applicationContext = new GenericWebApplicationContext() {
+        AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext() {
             @Override
             protected void onRefresh() {
                 super.onRefresh();
@@ -30,8 +42,7 @@ public class HellobootApplication {
                 webServer.start();
             }
         }; // 스프링 컨테이너 생성
-        applicationContext.registerBean(HelloController.class); // 빈 오브젝트 클래스 정보 등록
-        applicationContext.registerBean(SimpleHelloService.class);
+        applicationContext.register(HellobootApplication.class);
         applicationContext.refresh(); // 구성 정보로 컨테이너 초기화(빈 오브젝트를 직접 생성)
     }
 }
