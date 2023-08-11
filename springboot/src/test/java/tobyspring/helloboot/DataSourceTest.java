@@ -2,18 +2,19 @@ package tobyspring.helloboot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * application.properties 파일 등록은 스프링 프레임워크 기본 동작 방식은 아니고 스프링 부트 초기화 과정에서 추가해주는 것.
- * 자동으로 포함이 안 되므로
- * @TestPropertySource("classpath:/application.properties")
- * 로 properties 정보를 읽어오도록 설정
+ * @JdbcTest
+ * - Spring Boot Test 준비
+ * - 자동구성 중 JDBC 를 이용하기 위해 필요한 빈들만 로딩
+ * - embedded db 로 dataSource 교체
  */
-@HellobootTest
+@JdbcTest
 public class DataSourceTest {
     @Autowired
     DataSource dataSource;
