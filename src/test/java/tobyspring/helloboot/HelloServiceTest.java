@@ -11,24 +11,35 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @UnitTest
-@interface FastUnitTest{
+@interface FastUnitTest {
 }
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Test
-@interface UnitTest{
+@interface UnitTest {
 }
 
 class HelloServiceTest {
     @Test
     void simpleHelloService() {
-        SimpleHelloService helloService = new SimpleHelloService();
+        SimpleHelloService helloService = new SimpleHelloService(helloRepositoryStub);
 
         String ret = helloService.sayHello("Test");
 
         Assertions.assertThat(ret).isEqualTo("Hello Test");
     }
+
+    private HelloRepository helloRepositoryStub = new HelloRepository() {
+        @Override
+        public Hello findHello(String name) {
+            return null;
+        }
+
+        @Override
+        public void increaseCount(String name) {
+        }
+    };
 
     @Test
     void helloDecorator() {

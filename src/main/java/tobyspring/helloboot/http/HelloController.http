@@ -1,6 +1,14 @@
 ### hello
-GET localhost:8080/hello?name=Spring
+GET localhost:9090/app/hello?name=Spring
 
 
 ### hello servlet
-GET localhost:8080/hello?name=Servlet
+GET localhost:9090/app/hello?name=Servlet
+
+
+### say hello
+GET localhost:9090/app/hello?name=Aaron
+
+
+### hello count
+GET localhost:9090/app/count?name=Aaron
