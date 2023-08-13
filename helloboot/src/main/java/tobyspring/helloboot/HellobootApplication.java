@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import tobyspring.config.MySpringBootApplication;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 @RequiredArgsConstructor
 @MySpringBootApplication
